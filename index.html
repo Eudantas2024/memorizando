@@ -20,8 +20,6 @@
             background-color: #1e1e1e;
         }
 
-
-
         #NovaAnotacao {
             background-color: #333;
             color: #fff;
@@ -29,14 +27,11 @@
 
         .caixatituloanotacoes {
             max-width: 100%;
-
         }
 
         .tituloanotacoes {
             min-height: 30px;
             min-width: 400px;
-            /* Altura mínima inicial */
-
         }
 
         #anotacoes {
@@ -45,14 +40,11 @@
             color: #e0e0e0;
             min-height: 300px;
             padding: 10px;
-            /* espaço interno */
-            /* Altura mínima inicial */
         }
 
         #anotacoes div[contenteditable="false"] {
             cursor: nwse-resize;
         }
-
 
         .format-buttons button {
             background-color: #444;
@@ -76,12 +68,10 @@
             background-color: #555;
         }
 
-
         .buttonsalvar {
             background-color: #007bff;
             padding: 7px 14px;
             color: white;
-
         }
 
         input[type="text"] {
@@ -90,7 +80,6 @@
             border: 1px solid #555;
         }
 
-        /* Adicione este novo estilo para o botão de cor */
         .btn-cor {
             padding: 8px 12px;
             background-color: #444;
@@ -99,6 +88,11 @@
             border-radius: 6px;
             cursor: pointer;
             margin-right: -10px;
+        }
+        
+        #corTexto {
+            margin: 22px;
+            
         }
 
         /* Estilos do Tema Claro (Adicionados para a alternância) */
@@ -110,7 +104,6 @@
         .light-mode #formCadastro {
             background-color: #ffffff;
         }
-
 
         .light-mode #btnNovaAnotacao {
             background-color: #f1c40f;
@@ -145,7 +138,6 @@
             background-color: #007bff;
             padding: 7px 14px;
             color: white;
-
         }
 
         .light-mode button:hover,
@@ -242,7 +234,6 @@
             padding-bottom: 3px;
         }
 
-
         .light-mode .btn-editar {
             background-color: #638cb9;
             color: white;
@@ -257,12 +248,10 @@
             background-color: #0056b3;
         }
 
-
         .light-mode .btn-excluir {
             background-color: #d15963;
             color: white;
         }
-
 
         .btn-excluir {
             background-color: #dc3545;
@@ -307,16 +296,11 @@
             .tituloanotacoes {
                 min-height: 30px;
                 min-width: 200px;
-                /* Altura mínima inicial */
-
             }
 
             #anotacoes {
                 font-size: 12px;
             }
-
-
-
 
             .btn-editar {
                 background-color: #007bff;
@@ -380,7 +364,6 @@
             #corTexto {
                 width: 10%;
             }
-
         }
     </style>
 </head>
@@ -398,28 +381,21 @@
     </div>
     <br><br>
 
-
     <div class="menubar">
 
-
-
         <button id="btnNovaAnotacao">Nova Anotação ✏️</button>
-
-
         <button id="btnAbrirForm">Abrir Formulário 🔽</button>
 
         <form id="formCadastro" style="display:none;">
 
-
             <div class="format-buttons">
-                <button type="button" onclick="document.execCommand('bold', false, '');"><b>Negrito</b></button>
-                <button type="button" onclick="document.execCommand('italic', false, '');"><i>Itálico</i></button>
-                <button type="button" onclick="document.execCommand('underline', false, '');"><u>Sublinhado</u></button>
+                <button type="button" onclick="document.execCommand('bold', false, '');"><b>n</b></button>
+                <button type="button" onclick="document.execCommand('italic', false, '');"><i>i</i></button>
+                <button type="button" onclick="document.execCommand('underline', false, '');"><u>s</u></button>
 
                 <button type="button" onclick="aumentarFonte()">A+</button>
                 <button type="button" onclick="diminuirFonte()">a-</button>
 
-                <!-- Botão Upload Imagem -->
                 <button type="button" onclick="document.getElementById('inputImagem').click()">🖼️ Upload
                     Imagem</button>
                 <input type="file" id="inputImagem" accept="image/*" style="display:none"
@@ -427,8 +403,10 @@
 
                 <br><br>
 
-                <label for="corTexto" class="btn-cor">Cor do Texto</label>
-                <input type="color" id="corTexto" oninput="mudarCor()">
+                <button type="button" class="btn-cor" onclick="aplicarCor()">Aplicar Cor</button>
+
+                
+                <input type="color" id="corTexto">
             </div>
             <br>
             <button class="buttonsalvar" type="submit">Salvar</button><br>
@@ -439,16 +417,14 @@
             <p>Caixa de texto:</p>
             <div id="anotacoes" contenteditable="true"></div>
 
-
         </form>
 
         <button id="btnAbrirNotificacoes">Ver Notificações ⚠️</button>
 
         <div id="notificacao" style="display:none;">
             <h2>⚠️ Notificação</h2>
-            <button onclick="fecharNotificacao()">Fechar ❌</button>
+            <button onclick="fecharNotificacao()">Fechar</button>
             <div id="conteudoNotificacao"></div>
-
         </div>
         <div id="botoesJson">
             <button id="btnExportar">Exportar Dados 📤</button>
@@ -473,7 +449,6 @@
             // --- Alternar Tema e Salvar no localStorage ---
             const btnToggleTheme = document.getElementById('btnToggleTheme');
 
-            // Carregar tema salvo ao abrir a página
             window.addEventListener("DOMContentLoaded", () => {
                 const temaSalvo = localStorage.getItem("tema");
                 if (temaSalvo === "light") {
@@ -484,7 +459,6 @@
                 }
             });
 
-            // Alternar e salvar tema
             btnToggleTheme.addEventListener('click', () => {
                 document.body.classList.toggle('light-mode');
                 const isLightMode = document.body.classList.contains('light-mode');
@@ -492,19 +466,7 @@
                 btnToggleTheme.textContent = isLightMode ? 'Alternar Tema 🌙' : 'Alternar Tema ☀️';
             });
 
-
-
-
-
-
-
-            // Nova função para mudar a cor do texto
-            function mudarCor() {
-                const corSelecionada = document.getElementById('corTexto').value;
-                document.execCommand('foreColor', false, corSelecionada);
-            }
-
-            // Funções para aumentar e diminuir o tamanho da fonte
+            // --- LÓGICA DE FORMATAÇÃO DE TEXTO ---
             function aumentarFonte() {
                 const anotacoes = document.getElementById('anotacoes');
                 const style = window.getComputedStyle(anotacoes, null).getPropertyValue('font-size');
@@ -519,26 +481,23 @@
                 anotacoes.style.fontSize = (currentSize - 1) + 'px';
             }
 
+            // Nova função para aplicar a cor do texto quando o botão é clicado
+            function aplicarCor() {
+                const corSelecionada = document.getElementById('corTexto').value;
+                document.execCommand('foreColor', false, corSelecionada);
+            }
+
             document.getElementById("btnNovaAnotacao").addEventListener("click", () => {
-                // Limpa o formulário
                 document.getElementById("titulo").value = "";
                 document.getElementById("anotacoes").innerHTML = "";
-
-                // Reseta a edição
                 editarId = null;
-
-                // Mostra o formulário
                 const form = document.getElementById("formCadastro");
                 form.style.display = "block";
-
-                // Atualiza o botão de abrir/fechar formulário
                 document.getElementById("btnAbrirForm").textContent = "Fechar Formulário ❌";
-
-                // Rola para o formulário
-                form.scrollIntoView({ behavior: "smooth" });
+                form.scrollIntoView({
+                    behavior: "smooth"
+                });
             });
-
-
 
             document.getElementById("btnAbrirForm").addEventListener("click", function () {
                 const form = document.getElementById("formCadastro");
@@ -698,7 +657,7 @@
                 const leitor = new FileReader();
                 leitor.onload = function (e) {
                     const wrapper = document.createElement("div");
-                    wrapper.contentEditable = "false"; // evita apagar a borda sem querer
+                    wrapper.contentEditable = "false";
                     wrapper.style.display = "inline-block";
                     wrapper.style.resize = "both";
                     wrapper.style.overflow = "auto";
@@ -727,10 +686,7 @@
                     const imagens = anotacoes.querySelectorAll("img:not(.resized)");
 
                     imagens.forEach(img => {
-                        // Evita aplicar duas vezes
                         img.classList.add("resized");
-
-                        // Criar wrapper redimensionável
                         const wrapper = document.createElement("div");
                         wrapper.contentEditable = "false";
                         wrapper.style.display = "inline-block";
@@ -741,20 +697,15 @@
                         wrapper.style.margin = "10px 0";
                         wrapper.style.padding = "2px";
 
-                        // Ajustar imagem
                         img.style.maxWidth = "100%";
                         img.style.height = "auto";
                         img.style.display = "block";
 
-                        // Substituir imagem pelo wrapper
                         img.parentNode.insertBefore(wrapper, img);
                         wrapper.appendChild(img);
                     });
-                }, 10); // pequeno delay p/ esperar o navegador colar
+                }, 10);
             });
-
-
-
 
             function editarNota(id) {
                 obterNota(id, (nota) => {
